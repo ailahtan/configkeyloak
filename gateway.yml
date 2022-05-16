@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enable: false
+          lower-case-service-id: true
+      routes:
+        - id: catalogservice
+          uri: lb://catalogservice
+          predicates:
+            - Path=/catalog/**
+        - id: serieservice
+          uri: lb://serieservice
+          predicates:
+            - Path=/series/**
+        - id: movieservice
+          uri: lb://movieservice
+          predicates:
+            - Path=/movies/**
+
+
+
+#       default-filters:
+#         - OIDCTokenRelay
+#security que puede romper todo y lloro
+#   security:
+#      oauth2:
+#        client:
+#          provider:
+#            google:
+#             issuer-uri: https://accounts.google.com
+#          registration:
+#            google:
+#              client-id: poruncaminitoyotefuiabuscar0.apps.googleusercontent.com
+#              client-secret: muylejoscuandoteencontreee
+#              scope: openid
+#              redirect_uri: http://localhost:8080/login/oauth2/code/google
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    preferIpAddress: true
